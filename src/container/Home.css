@@ -1,0 +1,46 @@
+.Heading{
+    display: flex;
+    width: 100%;
+    background-color: black;
+    align-content: center;
+    overflow: visible;
+    position: sticky;
+}
+
+.Heading>h1{
+    color: aliceblue;
+    flex-grow: 1;
+    /* margin-right: 30%; */
+}
+
+.search-bar{
+    /* position: relative; */
+    margin-top: 20px;
+    margin-bottom: 20px;
+    flex-grow: 10;
+    /* margin-right: 20%; */
+    /* width: auto; */
+}
+
+.search-icon{
+    margin-left: -50px;
+    margin-right: 50px;
+}
+
+.nav-button{
+    float: right;
+    color: aliceblue;
+    margin-left: 5px;
+    margin-top: 25px;
+    /* flex-grow: 2; */
+    /* margin-right: 20%; */
+
+}
+
+.container{
+
+}
+
+.user-card{
+    color: black;
+}
