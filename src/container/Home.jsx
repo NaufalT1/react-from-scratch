@@ -6,6 +6,7 @@ import SearchIcon from "../assets/SearchIcon.svg";
 import "./Home.css";
 
 const API_URL_USER = "https://jsonplaceholder.typicode.com/users";
+const API_URL_POST = "https://jsonplaceholder.typicode.com/posts";
 
 class Home extends React.Component {
   constructor(props) {
@@ -14,11 +15,13 @@ class Home extends React.Component {
       activeSite: "Home/UserList/Profile",
       keyword: "",
       userList: [],
+      postList: [],
     };
   }
 
   componentDidMount() {
-    this.setState({ activeSite: "Home" });
+    this.setState({ activeSite: "Home"});
+    this.searchPost(null);
   }
 
   searchUser = async (keyword) => {
@@ -35,6 +38,23 @@ class Home extends React.Component {
           };
     }
   };
+
+  searchPost = async (userId) => {
+    {
+      if (userId){
+            const response = await fetch(`${API_URL_POST}?userId=${userId}`);
+            const data = await response.json();
+            this.setState({postList: data});
+          }
+        else {
+            const response = await fetch(`${API_URL_POST}`);
+            const data = await response.json();
+            this.setState({postList: data});
+          };
+    }
+  };
+
+
   render() {
     return (
       <div className="Home-screen">
@@ -67,7 +87,7 @@ class Home extends React.Component {
 
         {this.state.activeSite == "Home" ? (
           <div className="Container">
-            <Dashboard />
+            <Dashboard postList={this.state.postList}/>
           </div>
         ) : this.state.activeSite == "UserList" ? (
           <div className="Container">
