@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from "react";
 import User from "./User";
 
-
-
 function UserList(props) {
-  return (
-    <div>
-      {props.userList ? (
-        <div className="user-card">
-          {props.userList.map((user) => (
+    const userListItem = props.userList.map((user) => {
+        return (
+          <div className="user-card" key={user.id}
+          onClick={()=>props.userClick(user.id)}>
             <User user={user} />
-          ))}
-        </div>
-      ) : (
-        <div className="empty">No User Found</div>
-      )}
-    </div>
-  );
+          </div>
+        );
+      });
+    <div className="empty">No User Found</div>
+
+  return (<div className="user-list">{userListItem}</div>);
 }
 
 export default UserList;
