@@ -5,17 +5,36 @@ import UserList from "../components/UserList";
 import SearchIcon from "../assets/SearchIcon.svg";
 import "./Home.css";
 
+const API_URL_USER = "https://jsonplaceholder.typicode.com/users";
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       activeSite: "Home/UserList/Profile",
       keyword: "",
+      userList: [],
     };
   }
+
   componentDidMount() {
     this.setState({ activeSite: "Home" });
   }
+
+  searchUser = async (keyword) => {
+    {
+      if (keyword){
+            const response = await fetch(`${API_URL_USER}?username=${keyword}`);
+            const data = await response.json();
+            this.setState({userList: data});
+          }
+        else {
+            const response = await fetch(`${API_URL_USER}`);
+            const data = await response.json();
+            this.setState({userList: data});
+          };
+    }
+  };
   render() {
     return (
       <div className="Home-screen">
@@ -31,13 +50,15 @@ class Home extends React.Component {
             className="search-bar"
             placeholder="Search User"
             value={this.state.keyword}
-            onChange={(item) => this.setState({ keyword: item.target.value })}
+            onChange={(item) => this.setState({ keyword: item.target.value }
+              )}
           />
           <img
             className="search-icon"
             src={SearchIcon}
             alt="search"
             onClick={() => {
+              this.searchUser(this.state.keyword)
               this.setState({ activeSite: "UserList" });
             }}
           />
@@ -50,7 +71,7 @@ class Home extends React.Component {
           </div>
         ) : this.state.activeSite == "UserList" ? (
           <div className="Container">
-            <UserList username={this.state.keyword}/>
+            <UserList userList={this.state.userList} />
           </div>
         ) : this.state.activeSite == "Profile" ? (
           <div className="Container">
